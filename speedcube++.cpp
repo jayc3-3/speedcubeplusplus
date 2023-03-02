@@ -14,8 +14,6 @@ using namespace std;
 class BackgroundObject
 {
 	public:
-		int X = 0;
-		int Y = 0;
 		Image BImage;
 		Texture2D Texture;
 };
@@ -42,6 +40,48 @@ class PlatformObject
 		Texture2D Texture;
 		Rectangle Collider;
 };
+
+void PlatformSetup(PlatformObject& Platform)
+{
+	Platform.PlImage = LoadImage("Sprites/Platform.png");
+	Platform.Texture = LoadTextureFromImage(Platform.PlImage);
+	UnloadImage(Platform.PlImage);
+}
+
+void PlatformReset(PlatformObject& Platform, bool Start)
+{
+	if(Start)
+	{
+		Platform.X = (rand() % 500) + 960;
+		Platform.Speed = (rand() % 125) + 250;
+	}
+	else
+	{
+		Platform.X = (rand() % 500) + 960;
+		Platform.Speed = (rand() % 125) + 375;
+	}
+}
+
+void PlatformColliderUpdate(PlatformObject& Platform, PlayerObject& Player)
+{
+	Platform.Collider = {(float)Platform.X, (float)Platform.Y, 64.0f, 24.0f};
+	Platform.Collision = CheckCollisionRecs(Player.Collider, Platform.Collider);
+	if(Platform.Collision)
+	{
+		Player.Y = Platform.Y - 9;
+		Player.Grounded = true;
+	}
+}
+
+void BackgroundSetup(BackgroundObject& BackgroundTop, BackgroundObject& BackgroundBottom)
+{
+	BackgroundTop.BImage = LoadImage("Sprites/BackgroundTop.png");
+	BackgroundTop.Texture = LoadTextureFromImage(BackgroundTop.BImage);
+	BackgroundBottom.BImage = LoadImage("Sprites/BackgroundBottom.png");
+	BackgroundBottom.Texture = LoadTextureFromImage(BackgroundBottom.BImage);
+	UnloadImage(BackgroundTop.BImage);
+	UnloadImage(BackgroundBottom.BImage);
+}
 
 int main(void)
 {
@@ -92,65 +132,27 @@ int main(void)
 	PlatformObject Platform14;
 	PlatformObject Platform15;
 	
-	BackgroundTop.BImage = LoadImage("Sprites/BackgroundTop.png");
-	BackgroundBottom.BImage = LoadImage("Sprites/BackgroundBottom.png");
+	BackgroundSetup(BackgroundTop, BackgroundBottom);
+	PlatformSetup(StartPlatform);
+	PlatformSetup(Platform1);
+	PlatformSetup(Platform2);
+	PlatformSetup(Platform3);
+	PlatformSetup(Platform4);
+	PlatformSetup(Platform5);
+	PlatformSetup(Platform6);
+	PlatformSetup(Platform7);
+	PlatformSetup(Platform8);
+	PlatformSetup(Platform9);
+	PlatformSetup(Platform10);
+	PlatformSetup(Platform11);
+	PlatformSetup(Platform12);
+	PlatformSetup(Platform13);
+	PlatformSetup(Platform14);
+	PlatformSetup(Platform15);
+	
 	Player.PImage = LoadImage("Sprites/Player.png");
-	StartPlatform.PlImage = LoadImage("Sprites/Platform.png");
-	Platform1.PlImage = LoadImage("Sprites/Platform.png");
-	Platform2.PlImage = LoadImage("Sprites/Platform.png");
-	Platform3.PlImage = LoadImage("Sprites/Platform.png");
-	Platform4.PlImage = LoadImage("Sprites/Platform.png");
-	Platform5.PlImage = LoadImage("Sprites/Platform.png");
-	Platform6.PlImage = LoadImage("Sprites/Platform.png");
-	Platform7.PlImage = LoadImage("Sprites/Platform.png");
-	Platform8.PlImage = LoadImage("Sprites/Platform.png");
-	Platform9.PlImage = LoadImage("Sprites/Platform.png");
-	Platform10.PlImage = LoadImage("Sprites/Platform.png");
-	Platform11.PlImage = LoadImage("Sprites/Platform.png");
-	Platform12.PlImage = LoadImage("Sprites/Platform.png");
-	Platform13.PlImage = LoadImage("Sprites/Platform.png");
-	Platform14.PlImage = LoadImage("Sprites/Platform.png");
-	Platform15.PlImage = LoadImage("Sprites/Platform.png");
-	
-	BackgroundTop.Texture = LoadTextureFromImage(BackgroundTop.BImage);
-	BackgroundBottom.Texture = LoadTextureFromImage(BackgroundBottom.BImage);
 	Player.Texture = LoadTextureFromImage(Player.PImage);
-	StartPlatform.Texture = LoadTextureFromImage(StartPlatform.PlImage);
-	Platform1.Texture = LoadTextureFromImage(Platform1.PlImage);
-	Platform2.Texture = LoadTextureFromImage(Platform2.PlImage);
-	Platform3.Texture = LoadTextureFromImage(Platform3.PlImage);
-	Platform4.Texture = LoadTextureFromImage(Platform4.PlImage);
-	Platform5.Texture = LoadTextureFromImage(Platform5.PlImage);
-	Platform6.Texture = LoadTextureFromImage(Platform6.PlImage);
-	Platform7.Texture = LoadTextureFromImage(Platform7.PlImage);
-	Platform8.Texture = LoadTextureFromImage(Platform8.PlImage);
-	Platform9.Texture = LoadTextureFromImage(Platform9.PlImage);
-	Platform10.Texture = LoadTextureFromImage(Platform10.PlImage);
-	Platform11.Texture = LoadTextureFromImage(Platform11.PlImage);
-	Platform12.Texture = LoadTextureFromImage(Platform12.PlImage);
-	Platform13.Texture = LoadTextureFromImage(Platform13.PlImage);
-	Platform14.Texture = LoadTextureFromImage(Platform14.PlImage);
-	Platform15.Texture = LoadTextureFromImage(Platform15.PlImage);
-	
-	UnloadImage(BackgroundTop.BImage);
-	UnloadImage(BackgroundBottom.BImage);
 	UnloadImage(Player.PImage);
-	UnloadImage(StartPlatform.PlImage);
-	UnloadImage(Platform1.PlImage);
-	UnloadImage(Platform2.PlImage);
-	UnloadImage(Platform3.PlImage);
-	UnloadImage(Platform4.PlImage);
-	UnloadImage(Platform5.PlImage);
-	UnloadImage(Platform6.PlImage);
-	UnloadImage(Platform7.PlImage);
-	UnloadImage(Platform8.PlImage);
-	UnloadImage(Platform9.PlImage);
-	UnloadImage(Platform10.PlImage);
-	UnloadImage(Platform11.PlImage);
-	UnloadImage(Platform12.PlImage);
-	UnloadImage(Platform13.PlImage);
-	UnloadImage(Platform14.PlImage);
-	UnloadImage(Platform15.PlImage);
 	
 	Music BackgroundMusic = LoadMusicStream("Audio/BackgroundMusic.ogg");
 	PlayMusicStream(BackgroundMusic);
@@ -182,36 +184,21 @@ int main(void)
 				StartPlatform.X = 120;
 				StartPlatform.Y = 90;
 				StartPlatform.Speed = 65;
-				Platform1.X = (rand() % 500) + 960;
-				Platform1.Speed = (rand() % 125) + 375;
-				Platform2.X = (rand() % 500) + 960;
-				Platform2.Speed = (rand() % 125) + 250;
-				Platform3.X = (rand() % 500) + 960;
-				Platform3.Speed = (rand() % 125) + 250;
-				Platform4.X = (rand() % 500) + 960;
-				Platform4.Speed = (rand() % 125) + 250;
-				Platform5.X = (rand() % 500) + 960;
-				Platform5.Speed = (rand() % 125) + 250;
-				Platform6.X = (rand() % 500) + 960;
-				Platform6.Speed = (rand() % 125) + 250;
-				Platform7.X = (rand() % 500) + 960;
-				Platform7.Speed = (rand() % 125) + 250;
-				Platform8.X = (rand() % 500) + 960;
-				Platform8.Speed = (rand() % 125) + 250;
-				Platform9.X = (rand() % 500) + 960;
-				Platform9.Speed = (rand() % 125) + 250;
-				Platform10.X = (rand() % 500) + 960;
-				Platform10.Speed = (rand() % 125) + 250;
-				Platform11.X = (rand() % 500) + 960;
-				Platform11.Speed = (rand() % 125) + 250;
-				Platform12.X = (rand() % 500) + 960;
-				Platform12.Speed = (rand() % 125) + 250;
-				Platform13.X = (rand() % 500) + 960;
-				Platform13.Speed = (rand() % 125) + 250;
-				Platform14.X = (rand() % 500) + 960;
-				Platform14.Speed = (rand() % 125) + 250;
-				Platform15.X = (rand() % 500) + 960;
-				Platform15.Speed = (rand() % 125) + 250;
+				PlatformReset(Platform1, true);
+				PlatformReset(Platform2, true);
+				PlatformReset(Platform3, true);
+				PlatformReset(Platform4, true);
+				PlatformReset(Platform5, true);
+				PlatformReset(Platform6, true);
+				PlatformReset(Platform7, true);
+				PlatformReset(Platform8, true);
+				PlatformReset(Platform9, true);
+				PlatformReset(Platform10, true);
+				PlatformReset(Platform11, true);
+				PlatformReset(Platform12, true);
+				PlatformReset(Platform13, true);
+				PlatformReset(Platform14, true);
+				PlatformReset(Platform15, true);
 			}
 		}
 		else
@@ -263,199 +250,55 @@ int main(void)
 				}
 			}
 			if(Platform1.X < -64)
-			{
-				Platform1.X = (rand() % 500) + 960;
-				Platform1.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform1, false);
 			if(Platform2.X < -64)
-			{
-				Platform2.X = (rand() % 500) + 960;
-				Platform2.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform2, false);
 			if(Platform3.X < -64)
-			{
-				Platform3.X = (rand() % 500) + 960;
-				Platform3.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform3, false);
 			if(Platform4.X < -64)
-			{
-				Platform4.X = (rand() % 500) + 960;
-				Platform4.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform4, false);
 			if(Platform5.X < -64)
-			{
-				Platform5.X = (rand() % 500) + 960;
-				Platform5.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform5, false);
 			if(Platform6.X < -64)
-			{
-				Platform6.X = (rand() % 500) + 960;
-				Platform6.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform6, false);
 			if(Platform7.X < -64)
-			{
-				Platform7.X = (rand() % 500) + 960;
-				Platform7.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform7, false);
 			if(Platform8.X < -64)
-			{
-				Platform8.X = (rand() % 500) + 960;
-				Platform8.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform8, false);
 			if(Platform9.X < -64)
-			{
-				Platform9.X = (rand() % 500) + 960;
-				Platform9.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform9, false);
 			if(Platform10.X < -64)
-			{
-				Platform10.X = (rand() % 500) + 960;
-				Platform10.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform10, false);
 			if(Platform11.X < -64)
-			{
-				Platform11.X = (rand() % 500) + 960;
-				Platform11.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform11, false);
 			if(Platform12.X < -64)
-			{
-				Platform12.X = (rand() % 500) + 960;
-				Platform12.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform12, false);
 			if(Platform13.X < -64)
-			{
-				Platform13.X = (rand() % 500) + 960;
-				Platform13.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform13, false);
 			if(Platform14.X < -64)
-			{
-				Platform14.X = (rand() % 500) + 960;
-				Platform14.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform14, false);
 			if(Platform15.X < -64)
-			{
-				Platform15.X = (rand() % 500) + 960;
-				Platform15.Speed = (rand() % 125) + 375;
-			}
+				PlatformReset(Platform15, false);
 			
 			Player.Collider = {(float)Player.X, (float)Player.Y, 10.0f, 10.0f};
-			StartPlatform.Collider = {(float)StartPlatform.X, (float)StartPlatform.Y, 64.0f, 24.0f};
-			Platform1.Collider = {(float)Platform1.X, (float)Platform1.Y, 64.0f, 24.0f};
-			Platform2.Collider = {(float)Platform2.X, (float)Platform2.Y, 64.0f, 24.0f};
-			Platform3.Collider = {(float)Platform3.X, (float)Platform3.Y, 64.0f, 24.0f};
-			Platform4.Collider = {(float)Platform4.X, (float)Platform4.Y, 64.0f, 24.0f};
-			Platform5.Collider = {(float)Platform5.X, (float)Platform5.Y, 64.0f, 24.0f};
-			Platform6.Collider = {(float)Platform6.X, (float)Platform6.Y, 64.0f, 24.0f};
-			Platform7.Collider = {(float)Platform7.X, (float)Platform7.Y, 64.0f, 24.0f};
-			Platform8.Collider = {(float)Platform8.X, (float)Platform8.Y, 64.0f, 24.0f};
-			Platform9.Collider = {(float)Platform9.X, (float)Platform9.Y, 64.0f, 24.0f};
-			Platform10.Collider = {(float)Platform10.X, (float)Platform10.Y, 64.0f, 24.0f};
-			Platform11.Collider = {(float)Platform11.X, (float)Platform11.Y, 64.0f, 24.0f};
-			Platform12.Collider = {(float)Platform12.X, (float)Platform12.Y, 64.0f, 24.0f};
-			Platform13.Collider = {(float)Platform13.X, (float)Platform13.Y, 64.0f, 24.0f};
-			Platform14.Collider = {(float)Platform14.X, (float)Platform14.Y, 64.0f, 24.0f};
-			Platform15.Collider = {(float)Platform15.X, (float)Platform15.Y, 64.0f, 24.0f};
-			
-			StartPlatform.Collision = CheckCollisionRecs(Player.Collider, StartPlatform.Collider);
-			Platform1.Collision = CheckCollisionRecs(Player.Collider, Platform1.Collider);
-			Platform2.Collision = CheckCollisionRecs(Player.Collider, Platform2.Collider);
-			Platform3.Collision = CheckCollisionRecs(Player.Collider, Platform3.Collider);
-			Platform4.Collision = CheckCollisionRecs(Player.Collider, Platform4.Collider);
-			Platform5.Collision = CheckCollisionRecs(Player.Collider, Platform5.Collider);
-			Platform6.Collision = CheckCollisionRecs(Player.Collider, Platform6.Collider);
-			Platform7.Collision = CheckCollisionRecs(Player.Collider, Platform7.Collider);
-			Platform8.Collision = CheckCollisionRecs(Player.Collider, Platform8.Collider);
-			Platform9.Collision = CheckCollisionRecs(Player.Collider, Platform9.Collider);
-			Platform10.Collision = CheckCollisionRecs(Player.Collider, Platform10.Collider);
-			Platform11.Collision = CheckCollisionRecs(Player.Collider, Platform11.Collider);
-			Platform12.Collision = CheckCollisionRecs(Player.Collider, Platform12.Collider);
-			Platform13.Collision = CheckCollisionRecs(Player.Collider, Platform13.Collider);
-			Platform14.Collision = CheckCollisionRecs(Player.Collider, Platform14.Collider);
-			Platform15.Collision = CheckCollisionRecs(Player.Collider, Platform15.Collider);
-			
-			if(StartPlatform.Collision)
-			{
-				Player.Y = StartPlatform.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform1.Collision)
-			{
-				Player.Y = Platform1.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform2.Collision)
-			{
-				Player.Y = Platform2.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform3.Collision)
-			{
-				Player.Y = Platform3.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform4.Collision)
-			{
-				Player.Y = Platform4.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform5.Collision)
-			{
-				Player.Y = Platform5.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform6.Collision)
-			{
-				Player.Y = Platform6.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform7.Collision)
-			{
-				Player.Y = Platform7.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform8.Collision)
-			{
-				Player.Y = Platform8.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform9.Collision)
-			{
-				Player.Y = Platform9.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform10.Collision)
-			{
-				Player.Y = Platform10.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform11.Collision)
-			{
-				Player.Y = Platform11.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform12.Collision)
-			{
-				Player.Y = Platform12.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform13.Collision)
-			{
-				Player.Y = Platform13.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform14.Collision)
-			{
-				Player.Y = Platform14.Y - 9;
-				Player.Grounded = true;
-			}
-			else if(Platform15.Collision)
-			{
-				Player.Y = Platform15.Y - 9;
-				Player.Grounded = true;
-			}
+			PlatformColliderUpdate(StartPlatform, Player);
+			PlatformColliderUpdate(Platform1, Player);
+			PlatformColliderUpdate(Platform2, Player);
+			PlatformColliderUpdate(Platform3, Player);
+			PlatformColliderUpdate(Platform4, Player);
+			PlatformColliderUpdate(Platform5, Player);
+			PlatformColliderUpdate(Platform6, Player);
+			PlatformColliderUpdate(Platform7, Player);
+			PlatformColliderUpdate(Platform8, Player);
+			PlatformColliderUpdate(Platform9, Player);
+			PlatformColliderUpdate(Platform10, Player);
+			PlatformColliderUpdate(Platform11, Player);
+			PlatformColliderUpdate(Platform12, Player);
+			PlatformColliderUpdate(Platform13, Player);
+			PlatformColliderUpdate(Platform14, Player);
+			PlatformColliderUpdate(Platform15, Player);
 			
 			if(!StartPlatform.Collision)
-			{
 				if(!Platform1.Collision)
 					if(!Platform2.Collision)
 						if(!Platform3.Collision)
@@ -472,7 +315,6 @@ int main(void)
 																	if(!Platform14.Collision)
 																		if(!Platform15.Collision)
 																			Player.Grounded = false;
-			}
 			
 			if(Player.Grounded)
 				Player.YForce = 0;
