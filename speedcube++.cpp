@@ -45,6 +45,7 @@ class PlatformObject
 
 int main(void)
 {
+	printf("\n -- SpeedCube++ -- \nVersion 1.0.0\n\n");
 	const int ScreenWidth = 960;
 	const int ScreenHeight = 540;
 	const int Gravity = 100;
@@ -182,7 +183,7 @@ int main(void)
 				StartPlatform.Y = 90;
 				StartPlatform.Speed = 65;
 				Platform1.X = (rand() % 500) + 960;
-				Platform1.Speed = (rand() % 125) + 250;
+				Platform1.Speed = (rand() % 125) + 375;
 				Platform2.X = (rand() % 500) + 960;
 				Platform2.Speed = (rand() % 125) + 250;
 				Platform3.X = (rand() % 500) + 960;
@@ -249,9 +250,17 @@ int main(void)
 			
 			if(StartPlatform.X < -64)
 			{
+				if(StartPlatform.Speed == 65)
+				{
+					StartPlatform.X = (rand() % 500) + 960;
+					StartPlatform.Y = 450;
+					StartPlatform.Speed = 425;
+				}
+				else
+				{
 				StartPlatform.X = (rand() % 500) + 960;
-				StartPlatform.Y = 450;
 				StartPlatform.Speed = (rand() % 125) + 375;
+				}
 			}
 			if(Platform1.X < -64)
 			{
@@ -512,39 +521,39 @@ int main(void)
 		{
 			DrawTexture(Player.Texture, Player.X, Player.Y, BACKGROUND);
 			if(StartPlatform.X < 960)
-				DrawTexture(StartPlatform.Texture, StartPlatform.X, StartPlatform.Y, BACKGROUND);
+				DrawTexture(StartPlatform.Texture, StartPlatform.X, StartPlatform.Y, WHITE);
 			DrawTextEx(MediumFont, TextFormat("Score: %i", Score), (Vector2){25.0f, 10.0f}, 60, 1, WHITE);
 			DrawTextEx(MediumFont, TextFormat("High Score: %i", HighScore), (Vector2){25.0f, 65.0f}, 30, 1, WHITE);
 			if(Platform1.X < 960)
-				DrawTexture(Platform1.Texture, Platform1.X, Platform1.Y, BACKGROUND);
+				DrawTexture(Platform1.Texture, Platform1.X, Platform1.Y, WHITE);
 			if(Platform2.X < 960)
-				DrawTexture(Platform2.Texture, Platform2.X, Platform2.Y, BACKGROUND);
+				DrawTexture(Platform2.Texture, Platform2.X, Platform2.Y, WHITE);
 			if(Platform3.X < 960)
-				DrawTexture(Platform3.Texture, Platform3.X, Platform3.Y, BACKGROUND);
+				DrawTexture(Platform3.Texture, Platform3.X, Platform3.Y, WHITE);
 			if(Platform4.X < 960)
-				DrawTexture(Platform4.Texture, Platform4.X, Platform4.Y, BACKGROUND);
+				DrawTexture(Platform4.Texture, Platform4.X, Platform4.Y, WHITE);
 			if(Platform5.X < 960)
-				DrawTexture(Platform5.Texture, Platform5.X, Platform5.Y, BACKGROUND);
+				DrawTexture(Platform5.Texture, Platform5.X, Platform5.Y, WHITE);
 			if(Platform6.X < 960)
-				DrawTexture(Platform1.Texture, Platform6.X, Platform6.Y, BACKGROUND);
+				DrawTexture(Platform1.Texture, Platform6.X, Platform6.Y, WHITE);
 			if(Platform7.X < 960)
-				DrawTexture(Platform2.Texture, Platform7.X, Platform7.Y, BACKGROUND);
+				DrawTexture(Platform2.Texture, Platform7.X, Platform7.Y, WHITE);
 			if(Platform8.X < 960)
-				DrawTexture(Platform3.Texture, Platform8.X, Platform8.Y, BACKGROUND);
+				DrawTexture(Platform3.Texture, Platform8.X, Platform8.Y, WHITE);
 			if(Platform9.X < 960)
-				DrawTexture(Platform4.Texture, Platform9.X, Platform9.Y, BACKGROUND);
+				DrawTexture(Platform4.Texture, Platform9.X, Platform9.Y, WHITE);
 			if(Platform10.X < 960)
-				DrawTexture(Platform5.Texture, Platform10.X, Platform10.Y, BACKGROUND);
+				DrawTexture(Platform5.Texture, Platform10.X, Platform10.Y, WHITE);
 			if(Platform11.X < 960)
-				DrawTexture(Platform1.Texture, Platform11.X, Platform11.Y, BACKGROUND);
+				DrawTexture(Platform1.Texture, Platform11.X, Platform11.Y, WHITE);
 			if(Platform12.X < 960)
-				DrawTexture(Platform2.Texture, Platform12.X, Platform12.Y, BACKGROUND);
+				DrawTexture(Platform2.Texture, Platform12.X, Platform12.Y, WHITE);
 			if(Platform13.X < 960)
-				DrawTexture(Platform3.Texture, Platform13.X, Platform13.Y, BACKGROUND);
+				DrawTexture(Platform3.Texture, Platform13.X, Platform13.Y, WHITE);
 			if(Platform14.X < 960)
-				DrawTexture(Platform4.Texture, Platform14.X, Platform14.Y, BACKGROUND);
+				DrawTexture(Platform4.Texture, Platform14.X, Platform14.Y, WHITE);
 			if(Platform15.X < 960)
-				DrawTexture(Platform5.Texture, Platform15.X, Platform15.Y, BACKGROUND);
+				DrawTexture(Platform5.Texture, Platform15.X, Platform15.Y, WHITE);
 		}
 		
 		EndTextureMode();
