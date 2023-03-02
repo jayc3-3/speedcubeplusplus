@@ -8,6 +8,9 @@ using namespace std;
 
 #define BACKGROUND (Color){151, 151, 151, 255}
 
+#define MAX(a, b) ((a)>(b)? (a) : (b))
+#define MIN(a, b) ((a)<(b)? (a) : (b))
+
 class BackgroundObject
 {
 	public:
@@ -53,6 +56,7 @@ int main(void)
 	int ElapsedTime = 0;
 	bool Title = true;
 	
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(ScreenWidth, ScreenHeight, "SpeedCube++");
 	Image WindowIcon = LoadImage("Sprites/Icon.png");
 	SetWindowIcon(WindowIcon);
@@ -60,9 +64,12 @@ int main(void)
 	SetTargetFPS(60);
 	SetExitKey(KEY_F12);
 	
-	Font LargeFont = LoadFontEx("RalewayBold.ttf", 85, NULL, 0);
-	Font MediumFont = LoadFontEx("RalewayBold.ttf", 60, NULL, 0);
-	Font SmallFont = LoadFontEx("RalewayBold.ttf", 40, NULL, 0);
+	RenderTexture2D Target = LoadRenderTexture(ScreenWidth, ScreenHeight);
+	SetTextureFilter(Target.texture, TEXTURE_FILTER_BILINEAR);
+	
+	Font LargeFont = LoadFontEx("RalewayBold.ttf", 170, NULL, 0);
+	Font MediumFont = LoadFontEx("RalewayBold.ttf", 120, NULL, 0);
+	Font SmallFont = LoadFontEx("RalewayBold.ttf", 80, NULL, 0);
 		
 	BackgroundObject BackgroundTop;
 	BackgroundObject BackgroundBottom;
@@ -155,7 +162,9 @@ int main(void)
 		DeltaTime = GetFrameTime();
 
 		UpdateMusicStream(BackgroundMusic);
-
+		
+		float scale = MIN((float)GetScreenWidth()/ScreenWidth, (float)GetScreenHeight()/ScreenHeight);
+		
 		if(Title)
 		{
 			if(IsKeyDown(KEY_ENTER))
@@ -485,7 +494,7 @@ int main(void)
 			}
 		}
 		
-		BeginDrawing();
+		BeginTextureMode(Target);
 		
 		ClearBackground(BACKGROUND);
 		
@@ -538,6 +547,16 @@ int main(void)
 				DrawTexture(Platform5.Texture, Platform15.X, Platform15.Y, BACKGROUND);
 		}
 		
+		EndTextureMode();
+		
+		BeginDrawing();
+		
+		ClearBackground(BLACK);
+		
+		DrawTexturePro(Target.texture, (Rectangle){ 0.0f, 0.0f, (float)Target.texture.width, (float)-Target.texture.height },
+                           (Rectangle){ (GetScreenWidth() - ((float)ScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)ScreenHeight*scale))*0.5f,
+                           (float)ScreenWidth*scale, (float)ScreenHeight*scale }, (Vector2){ 0, 0 }, 0.0f, WHITE);
+		
 		EndDrawing();
 	}
 	
@@ -560,6 +579,8 @@ int main(void)
 	UnloadTexture(Platform13.Texture);
 	UnloadTexture(Platform14.Texture);
 	UnloadTexture(Platform15.Texture);
+	
+	UnloadRenderTexture(Target);
 	
 	CloseWindow();
 	CloseAudioDevice();
