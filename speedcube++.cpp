@@ -33,20 +33,11 @@ class PlatformObject
 {
 	public:
 		int X = 0;
-		int Y = 450;
+		int Y = 425;
 		int Speed = 0;
 		bool Collision = false;
-		Image PlImage;
-		Texture2D Texture;
 		Rectangle Collider;
 };
-
-void PlatformSetup(PlatformObject& Platform)
-{
-	Platform.PlImage = LoadImage("Sprites/Platform.png");
-	Platform.Texture = LoadTextureFromImage(Platform.PlImage);
-	UnloadImage(Platform.PlImage);
-}
 
 void PlatformReset(PlatformObject& Platform, bool Start)
 {
@@ -85,7 +76,6 @@ void BackgroundSetup(BackgroundObject& BackgroundTop, BackgroundObject& Backgrou
 
 int main(void)
 {
-	printf("\n -- SpeedCube++ -- \nVersion 1.0.0\n\n");
 	const int ScreenWidth = 960;
 	const int ScreenHeight = 540;
 	const int Gravity = 100;
@@ -131,24 +121,13 @@ int main(void)
 	PlatformObject Platform13;
 	PlatformObject Platform14;
 	PlatformObject Platform15;
+	Image PlatformImage;
+	Texture2D PlatformTexture;
 	
 	BackgroundSetup(BackgroundTop, BackgroundBottom);
-	PlatformSetup(StartPlatform);
-	PlatformSetup(Platform1);
-	PlatformSetup(Platform2);
-	PlatformSetup(Platform3);
-	PlatformSetup(Platform4);
-	PlatformSetup(Platform5);
-	PlatformSetup(Platform6);
-	PlatformSetup(Platform7);
-	PlatformSetup(Platform8);
-	PlatformSetup(Platform9);
-	PlatformSetup(Platform10);
-	PlatformSetup(Platform11);
-	PlatformSetup(Platform12);
-	PlatformSetup(Platform13);
-	PlatformSetup(Platform14);
-	PlatformSetup(Platform15);
+	PlatformImage = LoadImage("Sprites/Platform.png");
+	PlatformTexture = LoadTextureFromImage(PlatformImage);
+	UnloadImage(PlatformImage);
 	
 	Player.PImage = LoadImage("Sprites/Player.png");
 	Player.Texture = LoadTextureFromImage(Player.PImage);
@@ -240,7 +219,7 @@ int main(void)
 				if(StartPlatform.Speed == 65)
 				{
 					StartPlatform.X = (rand() % 500) + 960;
-					StartPlatform.Y = 450;
+					StartPlatform.Y = 425;
 					StartPlatform.Speed = 425;
 				}
 				else
@@ -363,41 +342,41 @@ int main(void)
 		{
 			DrawTexture(Player.Texture, Player.X, Player.Y, BACKGROUND);
 			if(StartPlatform.X < 960)
-				DrawTexture(StartPlatform.Texture, StartPlatform.X, StartPlatform.Y, WHITE);
+				DrawTexture(PlatformTexture, StartPlatform.X, StartPlatform.Y, WHITE);
 			DrawTextEx(MediumFont, TextFormat("Score: %i", Score), (Vector2){25.0f, 10.0f}, 60, 1, WHITE);
 			DrawTextEx(MediumFont, TextFormat("High Score: %i", HighScore), (Vector2){25.0f, 65.0f}, 30, 1, WHITE);
 			if(Platform1.X < 960)
-				DrawTexture(Platform1.Texture, Platform1.X, Platform1.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform1.X, Platform1.Y, WHITE);
 			if(Platform2.X < 960)
-				DrawTexture(Platform2.Texture, Platform2.X, Platform2.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform2.X, Platform2.Y, WHITE);
 			if(Platform3.X < 960)
-				DrawTexture(Platform3.Texture, Platform3.X, Platform3.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform3.X, Platform3.Y, WHITE);
 			if(Platform4.X < 960)
-				DrawTexture(Platform4.Texture, Platform4.X, Platform4.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform4.X, Platform4.Y, WHITE);
 			if(Platform5.X < 960)
-				DrawTexture(Platform5.Texture, Platform5.X, Platform5.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform5.X, Platform5.Y, WHITE);
 			if(Platform6.X < 960)
-				DrawTexture(Platform1.Texture, Platform6.X, Platform6.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform6.X, Platform6.Y, WHITE);
 			if(Platform7.X < 960)
-				DrawTexture(Platform2.Texture, Platform7.X, Platform7.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform7.X, Platform7.Y, WHITE);
 			if(Platform8.X < 960)
-				DrawTexture(Platform3.Texture, Platform8.X, Platform8.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform8.X, Platform8.Y, WHITE);
 			if(Platform9.X < 960)
-				DrawTexture(Platform4.Texture, Platform9.X, Platform9.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform9.X, Platform9.Y, WHITE);
 			if(Platform10.X < 960)
-				DrawTexture(Platform5.Texture, Platform10.X, Platform10.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform10.X, Platform10.Y, WHITE);
 			if(Platform11.X < 960)
-				DrawTexture(Platform1.Texture, Platform11.X, Platform11.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform11.X, Platform11.Y, WHITE);
 			if(Platform12.X < 960)
-				DrawTexture(Platform2.Texture, Platform12.X, Platform12.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform12.X, Platform12.Y, WHITE);
 			if(Platform13.X < 960)
-				DrawTexture(Platform3.Texture, Platform13.X, Platform13.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform13.X, Platform13.Y, WHITE);
 			if(Platform14.X < 960)
-				DrawTexture(Platform4.Texture, Platform14.X, Platform14.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform14.X, Platform14.Y, WHITE);
 			if(Platform15.X < 960)
-				DrawTexture(Platform5.Texture, Platform15.X, Platform15.Y, WHITE);
+				DrawTexture(PlatformTexture, Platform15.X, Platform15.Y, WHITE);
 		}
-		
+        
 		EndTextureMode();
 		
 		BeginDrawing();
@@ -414,22 +393,7 @@ int main(void)
 	UnloadTexture(Player.Texture);
 	UnloadTexture(BackgroundTop.Texture);
 	UnloadTexture(BackgroundBottom.Texture);
-	UnloadTexture(StartPlatform.Texture);
-	UnloadTexture(Platform1.Texture);
-	UnloadTexture(Platform2.Texture);
-	UnloadTexture(Platform3.Texture);
-	UnloadTexture(Platform4.Texture);
-	UnloadTexture(Platform5.Texture);
-	UnloadTexture(Platform6.Texture);
-	UnloadTexture(Platform7.Texture);
-	UnloadTexture(Platform8.Texture);
-	UnloadTexture(Platform9.Texture);
-	UnloadTexture(Platform10.Texture);
-	UnloadTexture(Platform11.Texture);
-	UnloadTexture(Platform12.Texture);
-	UnloadTexture(Platform13.Texture);
-	UnloadTexture(Platform14.Texture);
-	UnloadTexture(Platform15.Texture);
+	UnloadTexture(PlatformTexture);
 	
 	UnloadRenderTexture(Target);
 	
