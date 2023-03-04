@@ -8,7 +8,6 @@ using namespace std;
 
 #define BACKGROUND (Color){151, 151, 151, 255}
 
-#define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
 
 class BackgroundObject
@@ -76,6 +75,8 @@ void BackgroundSetup(BackgroundObject& BackgroundTop, BackgroundObject& Backgrou
 
 int main(void)
 {
+	printf("\n -- SpeedCube++ -- \nVersion 1.1.0\n\n");
+	
 	const int ScreenWidth = 960;
 	const int ScreenHeight = 540;
 	const int Gravity = 100;
@@ -326,67 +327,70 @@ int main(void)
 		
 		BeginTextureMode(Target);
 		
-		ClearBackground(BACKGROUND);
-		
-		DrawTexture(BackgroundTop.Texture, 0, 0, WHITE);
-		DrawTexture(BackgroundBottom.Texture, 0, 390, WHITE);
-		
-		if(Title)
-		{
-			DrawTextEx(LargeFont, "SpeedCube", (Vector2){270.0f, 100.0f}, 85, 3, WHITE);
-			DrawTextEx(SmallFont, "++", (Vector2){700.0f, 115.0f}, 40, 3, WHITE);
-			DrawTextEx(SmallFont, "Enter to Start", (Vector2){365.0f, 225.0f}, 40, 1, WHITE);
-			DrawTextEx(SmallFont, "https://the-gaminggamer.itch.io", (Vector2){25.0f, 510.0f}, 20, 1, WHITE);
-		}
-		else
-		{
-			DrawTexture(Player.Texture, Player.X, Player.Y, BACKGROUND);
-			if(StartPlatform.X < 960)
-				DrawTexture(PlatformTexture, StartPlatform.X, StartPlatform.Y, WHITE);
-			DrawTextEx(MediumFont, TextFormat("Score: %i", Score), (Vector2){25.0f, 10.0f}, 60, 1, WHITE);
-			DrawTextEx(MediumFont, TextFormat("High Score: %i", HighScore), (Vector2){25.0f, 65.0f}, 30, 1, WHITE);
-			if(Platform1.X < 960)
-				DrawTexture(PlatformTexture, Platform1.X, Platform1.Y, WHITE);
-			if(Platform2.X < 960)
-				DrawTexture(PlatformTexture, Platform2.X, Platform2.Y, WHITE);
-			if(Platform3.X < 960)
-				DrawTexture(PlatformTexture, Platform3.X, Platform3.Y, WHITE);
-			if(Platform4.X < 960)
-				DrawTexture(PlatformTexture, Platform4.X, Platform4.Y, WHITE);
-			if(Platform5.X < 960)
-				DrawTexture(PlatformTexture, Platform5.X, Platform5.Y, WHITE);
-			if(Platform6.X < 960)
-				DrawTexture(PlatformTexture, Platform6.X, Platform6.Y, WHITE);
-			if(Platform7.X < 960)
-				DrawTexture(PlatformTexture, Platform7.X, Platform7.Y, WHITE);
-			if(Platform8.X < 960)
-				DrawTexture(PlatformTexture, Platform8.X, Platform8.Y, WHITE);
-			if(Platform9.X < 960)
-				DrawTexture(PlatformTexture, Platform9.X, Platform9.Y, WHITE);
-			if(Platform10.X < 960)
-				DrawTexture(PlatformTexture, Platform10.X, Platform10.Y, WHITE);
-			if(Platform11.X < 960)
-				DrawTexture(PlatformTexture, Platform11.X, Platform11.Y, WHITE);
-			if(Platform12.X < 960)
-				DrawTexture(PlatformTexture, Platform12.X, Platform12.Y, WHITE);
-			if(Platform13.X < 960)
-				DrawTexture(PlatformTexture, Platform13.X, Platform13.Y, WHITE);
-			if(Platform14.X < 960)
-				DrawTexture(PlatformTexture, Platform14.X, Platform14.Y, WHITE);
-			if(Platform15.X < 960)
-				DrawTexture(PlatformTexture, Platform15.X, Platform15.Y, WHITE);
-		}
+			ClearBackground(BACKGROUND);
+			
+			DrawTexture(BackgroundTop.Texture, 0, 0, WHITE);
+			DrawTexture(BackgroundBottom.Texture, 0, 390, WHITE);
+			
+			if(Title)
+			{
+				DrawTextEx(LargeFont, "SpeedCube", (Vector2){270.0f, 100.0f}, 85, 3, WHITE);
+				DrawTextEx(SmallFont, "++", (Vector2){700.0f, 115.0f}, 40, 3, WHITE);
+				DrawTextEx(SmallFont, "Enter to Start", (Vector2){365.0f, 225.0f}, 40, 1, WHITE);
+				DrawTextEx(SmallFont, "https://the-gaminggamer.itch.io", (Vector2){25.0f, 510.0f}, 20, 1, WHITE);
+			}
+			else
+			{
+				DrawTexture(Player.Texture, Player.X, Player.Y, BACKGROUND);
+				
+				if(StartPlatform.X < 960)
+					DrawTexture(PlatformTexture, StartPlatform.X, StartPlatform.Y, WHITE);
+					
+				DrawTextEx(MediumFont, TextFormat("Score: %i", Score), (Vector2){25.0f, 10.0f}, 60, 1, WHITE);
+				DrawTextEx(MediumFont, TextFormat("High Score: %i", HighScore), (Vector2){25.0f, 65.0f}, 30, 1, WHITE);
+				
+				if(Platform1.X < 960)
+					DrawTexture(PlatformTexture, Platform1.X, Platform1.Y, WHITE);
+				if(Platform2.X < 960)
+					DrawTexture(PlatformTexture, Platform2.X, Platform2.Y, WHITE);
+				if(Platform3.X < 960)
+					DrawTexture(PlatformTexture, Platform3.X, Platform3.Y, WHITE);
+				if(Platform4.X < 960)
+					DrawTexture(PlatformTexture, Platform4.X, Platform4.Y, WHITE);
+				if(Platform5.X < 960)
+					DrawTexture(PlatformTexture, Platform5.X, Platform5.Y, WHITE);
+				if(Platform6.X < 960)
+					DrawTexture(PlatformTexture, Platform6.X, Platform6.Y, WHITE);
+				if(Platform7.X < 960)
+					DrawTexture(PlatformTexture, Platform7.X, Platform7.Y, WHITE);
+				if(Platform8.X < 960)
+					DrawTexture(PlatformTexture, Platform8.X, Platform8.Y, WHITE);
+				if(Platform9.X < 960)
+					DrawTexture(PlatformTexture, Platform9.X, Platform9.Y, WHITE);
+				if(Platform10.X < 960)
+					DrawTexture(PlatformTexture, Platform10.X, Platform10.Y, WHITE);
+				if(Platform11.X < 960)
+					DrawTexture(PlatformTexture, Platform11.X, Platform11.Y, WHITE);
+				if(Platform12.X < 960)
+					DrawTexture(PlatformTexture, Platform12.X, Platform12.Y, WHITE);
+				if(Platform13.X < 960)
+					DrawTexture(PlatformTexture, Platform13.X, Platform13.Y, WHITE);
+				if(Platform14.X < 960)
+					DrawTexture(PlatformTexture, Platform14.X, Platform14.Y, WHITE);
+				if(Platform15.X < 960)
+					DrawTexture(PlatformTexture, Platform15.X, Platform15.Y, WHITE);
+			}
         
 		EndTextureMode();
 		
 		BeginDrawing();
 		
-		ClearBackground(BLACK);
-		
-		DrawTexturePro(Target.texture, (Rectangle){ 0.0f, 0.0f, (float)Target.texture.width, (float)-Target.texture.height },
-                           (Rectangle){ (GetScreenWidth() - ((float)ScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)ScreenHeight*scale))*0.5f,
-                           (float)ScreenWidth*scale, (float)ScreenHeight*scale }, (Vector2){ 0, 0 }, 0.0f, WHITE);
-		
+			ClearBackground(BLACK);
+			
+			DrawTexturePro(Target.texture, (Rectangle){ 0.0f, 0.0f, (float)Target.texture.width, (float)-Target.texture.height },
+							   (Rectangle){ (GetScreenWidth() - ((float)ScreenWidth*scale))*0.5f, (GetScreenHeight() - ((float)ScreenHeight*scale))*0.5f,
+							   (float)ScreenWidth*scale, (float)ScreenHeight*scale }, (Vector2){ 0, 0 }, 0.0f, WHITE);
+			
 		EndDrawing();
 	}
 	
@@ -396,6 +400,15 @@ int main(void)
 	UnloadTexture(PlatformTexture);
 	
 	UnloadRenderTexture(Target);
+	
+	UnloadFont(LargeFont);
+	UnloadFont(MediumFont);
+	UnloadFont(SmallFont);
+	
+	UnloadSound(GameStart);
+	UnloadSound(PlayerDeath);
+	
+	UnloadMusicStream(BackgroundMusic);
 	
 	CloseWindow();
 	CloseAudioDevice();
