@@ -91,6 +91,7 @@ int main(void)
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(ScreenWidth, ScreenHeight, "SpeedCube++");
 	Image WindowIcon = LoadImage("Sprites/Icon.png");
+	UnloadImage(WindowIcon);
 	SetWindowIcon(WindowIcon);
 	InitAudioDevice();
 	SetTargetFPS(60);
