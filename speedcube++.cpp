@@ -13,7 +13,6 @@ using namespace std;
 class BackgroundObject
 {
 	public:
-		Image BImage;
 		Texture2D Texture;
 };
 class PlayerObject
@@ -65,12 +64,8 @@ void PlatformColliderUpdate(PlatformObject& Platform, PlayerObject& Player)
 
 void BackgroundSetup(BackgroundObject& BackgroundTop, BackgroundObject& BackgroundBottom)
 {
-	BackgroundTop.BImage = LoadImage("Sprites/BackgroundTop.png");
-	BackgroundTop.Texture = LoadTextureFromImage(BackgroundTop.BImage);
-	BackgroundBottom.BImage = LoadImage("Sprites/BackgroundBottom.png");
-	BackgroundBottom.Texture = LoadTextureFromImage(BackgroundBottom.BImage);
-	UnloadImage(BackgroundTop.BImage);
-	UnloadImage(BackgroundBottom.BImage);
+	BackgroundTop.Texture = LoadTexture("Sprites/BackgroundTop.png");
+	BackgroundBottom.Texture = LoadTexture("Sprites/BackgroundBottom.png");
 }
 
 int main(void)
@@ -91,8 +86,8 @@ int main(void)
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(ScreenWidth, ScreenHeight, "SpeedCube++");
 	Image WindowIcon = LoadImage("Sprites/Icon.png");
-	UnloadImage(WindowIcon);
 	SetWindowIcon(WindowIcon);
+	UnloadImage(WindowIcon);
 	InitAudioDevice();
 	SetTargetFPS(60);
 	SetExitKey(KEY_F12);
@@ -283,7 +278,6 @@ int main(void)
 						DrawTexture(PlatformTexture, Platforms[i].X, Platforms[i].Y, WHITE);
 				}
 			}
-			DrawText(TextFormat("%i", GetFPS()), 900, 25, 50, WHITE);
         
 		EndTextureMode();
 		
