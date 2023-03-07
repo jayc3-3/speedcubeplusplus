@@ -31,10 +31,10 @@ class PlayerObject
 class PlatformObject
 {
 	public:
-		int X = 0;
-		int Y = 425;
-		int Speed = 0;
-		bool Collision = false;
+		int X;
+		int Y;
+		int Speed;
+		bool Collision;
 		Rectangle Collider;
 };
 
@@ -106,33 +106,18 @@ int main(void)
 	BackgroundObject BackgroundTop;
 	BackgroundObject BackgroundBottom;
 	PlayerObject Player;
-	PlatformObject StartPlatform;
-	PlatformObject Platform1;
-	PlatformObject Platform2;
-	PlatformObject Platform3;
-	PlatformObject Platform4;
-	PlatformObject Platform5;
-	PlatformObject Platform6;
-	PlatformObject Platform7;
-	PlatformObject Platform8;
-	PlatformObject Platform9;
-	PlatformObject Platform10;
-	PlatformObject Platform11;
-	PlatformObject Platform12;
-	PlatformObject Platform13;
-	PlatformObject Platform14;
-	PlatformObject Platform15;
-	Image PlatformImage;
+	PlatformObject Platforms[16] = {{0}, {1}, {2}, {3}, {4}, {5}, 
+	{6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}};
+	
+	for(int i = 0; i <= 15; i++)
+		Platforms[i].Y = 425;
+	
 	Texture2D PlatformTexture;
 	
 	BackgroundSetup(BackgroundTop, BackgroundBottom);
-	PlatformImage = LoadImage("Sprites/Platform.png");
-	PlatformTexture = LoadTextureFromImage(PlatformImage);
-	UnloadImage(PlatformImage);
+	PlatformTexture = LoadTexture("Sprites/Platform.png");
 	
-	Player.PImage = LoadImage("Sprites/Player.png");
-	Player.Texture = LoadTextureFromImage(Player.PImage);
-	UnloadImage(Player.PImage);
+	Player.Texture = LoadTexture("Sprites/Player.png");
 	
 	Music BackgroundMusic = LoadMusicStream("Audio/BackgroundMusic.ogg");
 	PlayMusicStream(BackgroundMusic);
@@ -161,24 +146,13 @@ int main(void)
 				Player.Y = 80;
 				Player.YForce = 0;
 				Player.Dead = false;
-				StartPlatform.X = 120;
-				StartPlatform.Y = 90;
-				StartPlatform.Speed = 65;
-				PlatformReset(Platform1, true);
-				PlatformReset(Platform2, true);
-				PlatformReset(Platform3, true);
-				PlatformReset(Platform4, true);
-				PlatformReset(Platform5, true);
-				PlatformReset(Platform6, true);
-				PlatformReset(Platform7, true);
-				PlatformReset(Platform8, true);
-				PlatformReset(Platform9, true);
-				PlatformReset(Platform10, true);
-				PlatformReset(Platform11, true);
-				PlatformReset(Platform12, true);
-				PlatformReset(Platform13, true);
-				PlatformReset(Platform14, true);
-				PlatformReset(Platform15, true);
+				for(int i = 1; i <=15; i++)
+				{
+					PlatformReset(Platforms[i], true);
+				}
+				Platforms[0].X = 120;
+				Platforms[0].Y = 90;
+				Platforms[0].Speed = 65;
 			}
 		}
 		else
@@ -198,102 +172,55 @@ int main(void)
 					Player.Grounded = false;
 				}
 			
-			StartPlatform.X = (int)StartPlatform.X - (StartPlatform.Speed * DeltaTime);
-			Platform1.X = (int)Platform1.X - (Platform1.Speed * DeltaTime);
-			Platform2.X = (int)Platform2.X - (Platform2.Speed * DeltaTime);
-			Platform3.X = (int)Platform3.X - (Platform3.Speed * DeltaTime);
-			Platform4.X = (int)Platform4.X - (Platform4.Speed * DeltaTime);
-			Platform5.X = (int)Platform5.X - (Platform5.Speed * DeltaTime);
-			Platform6.X = (int)Platform6.X - (Platform6.Speed * DeltaTime);
-			Platform7.X = (int)Platform7.X - (Platform7.Speed * DeltaTime);
-			Platform8.X = (int)Platform8.X - (Platform8.Speed * DeltaTime);
-			Platform9.X = (int)Platform9.X - (Platform9.Speed * DeltaTime);
-			Platform10.X = (int)Platform10.X - (Platform10.Speed * DeltaTime);
-			Platform11.X = (int)Platform11.X - (Platform11.Speed * DeltaTime);
-			Platform12.X = (int)Platform12.X - (Platform12.Speed * DeltaTime);
-			Platform13.X = (int)Platform13.X - (Platform13.Speed * DeltaTime);
-			Platform14.X = (int)Platform14.X - (Platform14.Speed * DeltaTime);
-			Platform15.X = (int)Platform15.X - (Platform15.Speed * DeltaTime);
-			
-			if(StartPlatform.X < -64)
+			for(int i = 0; i <= 15; i++)
 			{
-				if(StartPlatform.Speed == 65)
+				Platforms[i].X = (int)Platforms[i].X - (Platforms[i].Speed * DeltaTime);
+			}
+			
+			if(Platforms[0].X < -64)
+			{
+				if(Platforms[0].Speed == 65)
 				{
-					StartPlatform.X = (rand() % 500) + 960;
-					StartPlatform.Y = 425;
-					StartPlatform.Speed = 425;
+					Platforms[0].X = (rand() % 500) + 960;
+					Platforms[0].Y = 425;
+					Platforms[0].Speed = 425;
 				}
 				else
 				{
-				StartPlatform.X = (rand() % 500) + 960;
-				StartPlatform.Speed = (rand() % 125) + 375;
+					Platforms[0].X = (rand() % 500) + 960;
+					Platforms[0].Speed = (rand() % 125) + 375;
 				}
 			}
-			if(Platform1.X < -64)
-				PlatformReset(Platform1, false);
-			if(Platform2.X < -64)
-				PlatformReset(Platform2, false);
-			if(Platform3.X < -64)
-				PlatformReset(Platform3, false);
-			if(Platform4.X < -64)
-				PlatformReset(Platform4, false);
-			if(Platform5.X < -64)
-				PlatformReset(Platform5, false);
-			if(Platform6.X < -64)
-				PlatformReset(Platform6, false);
-			if(Platform7.X < -64)
-				PlatformReset(Platform7, false);
-			if(Platform8.X < -64)
-				PlatformReset(Platform8, false);
-			if(Platform9.X < -64)
-				PlatformReset(Platform9, false);
-			if(Platform10.X < -64)
-				PlatformReset(Platform10, false);
-			if(Platform11.X < -64)
-				PlatformReset(Platform11, false);
-			if(Platform12.X < -64)
-				PlatformReset(Platform12, false);
-			if(Platform13.X < -64)
-				PlatformReset(Platform13, false);
-			if(Platform14.X < -64)
-				PlatformReset(Platform14, false);
-			if(Platform15.X < -64)
-				PlatformReset(Platform15, false);
+			
+			for(int i = 1; i <= 15; i++)
+			{
+				if(Platforms[i].X < -64)
+					PlatformReset(Platforms[i], false);
+			}
 			
 			Player.Collider = {(float)Player.X, (float)Player.Y, 10.0f, 10.0f};
-			PlatformColliderUpdate(StartPlatform, Player);
-			PlatformColliderUpdate(Platform1, Player);
-			PlatformColliderUpdate(Platform2, Player);
-			PlatformColliderUpdate(Platform3, Player);
-			PlatformColliderUpdate(Platform4, Player);
-			PlatformColliderUpdate(Platform5, Player);
-			PlatformColliderUpdate(Platform6, Player);
-			PlatformColliderUpdate(Platform7, Player);
-			PlatformColliderUpdate(Platform8, Player);
-			PlatformColliderUpdate(Platform9, Player);
-			PlatformColliderUpdate(Platform10, Player);
-			PlatformColliderUpdate(Platform11, Player);
-			PlatformColliderUpdate(Platform12, Player);
-			PlatformColliderUpdate(Platform13, Player);
-			PlatformColliderUpdate(Platform14, Player);
-			PlatformColliderUpdate(Platform15, Player);
 			
-			if(!StartPlatform.Collision)
-				if(!Platform1.Collision)
-					if(!Platform2.Collision)
-						if(!Platform3.Collision)
-							if(!Platform4.Collision)
-								if(!Platform5.Collision)
-									if(!Platform6.Collision)
-										if(!Platform7.Collision)
-											if(!Platform8.Collision)
-												if(!Platform9.Collision)
-													if(!Platform10.Collision)
-														if(!Platform11.Collision)
-															if(!Platform12.Collision)
-																if(!Platform13.Collision)
-																	if(!Platform14.Collision)
-																		if(!Platform15.Collision)
+			for(int i = 0; i <= 15; i++)
+			{
+				PlatformColliderUpdate(Platforms[i], Player);
+			}
+			
+			if(!Platforms[0].Collision)
+				if(!Platforms[1].Collision)
+					if(!Platforms[2].Collision)
+						if(!Platforms[3].Collision)
+							if(!Platforms[4].Collision)
+								if(!Platforms[5].Collision)
+									if(!Platforms[6].Collision)
+										if(!Platforms[7].Collision)
+											if(!Platforms[8].Collision)
+												if(!Platforms[9].Collision)
+													if(!Platforms[10].Collision)
+														if(!Platforms[11].Collision)
+															if(!Platforms[12].Collision)
+																if(!Platforms[13].Collision)
+																	if(!Platforms[14].Collision)
+																		if(!Platforms[15].Collision)
 																			Player.Grounded = false;
 			
 			if(Player.Grounded)
@@ -343,43 +270,19 @@ int main(void)
 			{
 				DrawTexture(Player.Texture, Player.X, Player.Y, BACKGROUND);
 				
-				if(StartPlatform.X < 960)
-					DrawTexture(PlatformTexture, StartPlatform.X, StartPlatform.Y, WHITE);
+				if(Platforms[0].X < 960)
+					DrawTexture(PlatformTexture, Platforms[0].X, Platforms[0].Y, WHITE);
 					
 				DrawTextEx(MediumFont, TextFormat("Score: %i", Score), (Vector2){25.0f, 10.0f}, 60, 1, WHITE);
 				DrawTextEx(MediumFont, TextFormat("High Score: %i", HighScore), (Vector2){25.0f, 65.0f}, 30, 1, WHITE);
 				
-				if(Platform1.X < 960)
-					DrawTexture(PlatformTexture, Platform1.X, Platform1.Y, WHITE);
-				if(Platform2.X < 960)
-					DrawTexture(PlatformTexture, Platform2.X, Platform2.Y, WHITE);
-				if(Platform3.X < 960)
-					DrawTexture(PlatformTexture, Platform3.X, Platform3.Y, WHITE);
-				if(Platform4.X < 960)
-					DrawTexture(PlatformTexture, Platform4.X, Platform4.Y, WHITE);
-				if(Platform5.X < 960)
-					DrawTexture(PlatformTexture, Platform5.X, Platform5.Y, WHITE);
-				if(Platform6.X < 960)
-					DrawTexture(PlatformTexture, Platform6.X, Platform6.Y, WHITE);
-				if(Platform7.X < 960)
-					DrawTexture(PlatformTexture, Platform7.X, Platform7.Y, WHITE);
-				if(Platform8.X < 960)
-					DrawTexture(PlatformTexture, Platform8.X, Platform8.Y, WHITE);
-				if(Platform9.X < 960)
-					DrawTexture(PlatformTexture, Platform9.X, Platform9.Y, WHITE);
-				if(Platform10.X < 960)
-					DrawTexture(PlatformTexture, Platform10.X, Platform10.Y, WHITE);
-				if(Platform11.X < 960)
-					DrawTexture(PlatformTexture, Platform11.X, Platform11.Y, WHITE);
-				if(Platform12.X < 960)
-					DrawTexture(PlatformTexture, Platform12.X, Platform12.Y, WHITE);
-				if(Platform13.X < 960)
-					DrawTexture(PlatformTexture, Platform13.X, Platform13.Y, WHITE);
-				if(Platform14.X < 960)
-					DrawTexture(PlatformTexture, Platform14.X, Platform14.Y, WHITE);
-				if(Platform15.X < 960)
-					DrawTexture(PlatformTexture, Platform15.X, Platform15.Y, WHITE);
+				for(int i = 1; i <= 15; i++)
+				{
+					if(Platforms[i].X < 960)
+						DrawTexture(PlatformTexture, Platforms[i].X, Platforms[i].Y, WHITE);
+				}
 			}
+			DrawText(TextFormat("%i", GetFPS()), 900, 25, 50, WHITE);
         
 		EndTextureMode();
 		
