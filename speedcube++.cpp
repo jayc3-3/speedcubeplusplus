@@ -143,9 +143,7 @@ int main(void)
 				Player.YForce = 0;
 				Player.Dead = false;
 				for(int i = 1; i <=15; i++)
-				{
 					PlatformReset(Platforms[i], true);
-				}
 				Platforms[0].X = 120;
 				Platforms[0].Y = 90;
 				Platforms[0].Speed = 65;
@@ -197,9 +195,7 @@ int main(void)
 			Player.Collider = {(float)Player.X, (float)Player.Y, 10.0f, 10.0f};
 			
 			for(int i = 0; i <= 15; i++)
-			{
 				PlatformColliderUpdate(Platforms[i], Player);
-			}
 			
 			if(!Platforms[0].Collision)
 				if(!Platforms[1].Collision)
