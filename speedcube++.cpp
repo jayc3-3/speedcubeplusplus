@@ -107,7 +107,7 @@ int main(void)
 	
 	for(int i = 0; i <= 15; i++)
 		Platforms[i].Y = 425;
-	
+
 	Texture2D PlatformTexture;
 	
 	BackgroundSetup(BackgroundTop, BackgroundBottom);
@@ -143,7 +143,9 @@ int main(void)
 				Player.YForce = 0;
 				Player.Dead = false;
 				for(int i = 1; i <=15; i++)
+				{
 					PlatformReset(Platforms[i], true);
+				}
 				Platforms[0].X = 120;
 				Platforms[0].Y = 90;
 				Platforms[0].Speed = 65;
@@ -153,22 +155,22 @@ int main(void)
  		{
 			if(IsKeyDown(KEY_LEFT))
 				if(!IsKeyDown(KEY_RIGHT))
-					Player.X = (int)Player.X - (625 * DeltaTime);
+					Player.X -= (int)625 * DeltaTime;
 			if(IsKeyDown(KEY_RIGHT))
 				if(!IsKeyDown(KEY_LEFT))
-					Player.X = (int)Player.X + (625 * DeltaTime);
+					Player.X += (int)625 * DeltaTime;
 			
 			if(IsKeyDown(KEY_UP))
 				if(Player.Grounded)
 				{
 					Player.Y = Player.Y - 2;
-					Player.YForce = (int)Player.YForce - (1250 * DeltaTime);
+					Player.YForce -= (int)1250 * DeltaTime;
 					Player.Grounded = false;
 				}
 			
 			for(int i = 0; i <= 15; i++)
 			{
-				Platforms[i].X = (int)Platforms[i].X - (Platforms[i].Speed * DeltaTime);
+				Platforms[i].X -= (int)Platforms[i].Speed * DeltaTime;
 			}
 			
 			if(Platforms[0].X < -64)
@@ -195,7 +197,9 @@ int main(void)
 			Player.Collider = {(float)Player.X, (float)Player.Y, 10.0f, 10.0f};
 			
 			for(int i = 0; i <= 15; i++)
+			{
 				PlatformColliderUpdate(Platforms[i], Player);
+			}
 			
 			if(!Platforms[0].Collision)
 				if(!Platforms[1].Collision)
@@ -230,7 +234,7 @@ int main(void)
 			
 			if(ElapsedTime == 1)
 			{
-				Score = Score + 1;
+				Score++;
 				StartTime = time(0);
 			}
 			
