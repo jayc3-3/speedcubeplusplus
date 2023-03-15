@@ -10,11 +10,6 @@ using namespace std;
 
 #define MIN(a, b) ((a)<(b)? (a) : (b))
 
-class BackgroundObject
-{
-	public:
-		Texture2D Texture;
-};
 class PlayerObject
 {
 	public:
@@ -23,8 +18,6 @@ class PlayerObject
 		int YForce = 0;
 		bool Grounded = false;
 		bool Dead = false;
-		Image PImage;
-		Texture2D Texture;
 		Rectangle Collider;
 };
 class PlatformObject
@@ -62,12 +55,6 @@ void PlatformColliderUpdate(PlatformObject& Platform, PlayerObject& Player)
 	}
 }
 
-void BackgroundSetup(BackgroundObject& BackgroundTop, BackgroundObject& BackgroundBottom)
-{
-	BackgroundTop.Texture = LoadTexture("Sprites/BackgroundTop.png");
-	BackgroundBottom.Texture = LoadTexture("Sprites/BackgroundBottom.png");
-}
-
 int main(void)
 {
 	printf("\n -- SpeedCube++ -- \nVersion 1.1.0\n\n");
@@ -98,22 +85,18 @@ int main(void)
 	Font LargeFont = LoadFontEx("RalewayBold.ttf", 170, NULL, 0);
 	Font MediumFont = LoadFontEx("RalewayBold.ttf", 120, NULL, 0);
 	Font SmallFont = LoadFontEx("RalewayBold.ttf", 80, NULL, 0);
-		
-	BackgroundObject BackgroundTop;
-	BackgroundObject BackgroundBottom;
+	
 	PlayerObject Player;
-	PlatformObject Platforms[16] = {{0}, {1}, {2}, {3}, {4}, {5}, 
-	{6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}};
+	PlatformObject* Platforms = new PlatformObject[16];
 	
 	for(int i = 0; i <= 15; i++)
 		Platforms[i].Y = 425;
 
-	Texture2D PlatformTexture;
+	Texture2D BackgroundTopTexture = LoadTexture("Sprites/BackgroundTop.png");
+	Texture2D BackgroundBottomTexture = LoadTexture("Sprites/BackgroundBottom.png");
+	Texture2D PlatformTexture = LoadTexture("Sprites/Platform.png");
 	
-	BackgroundSetup(BackgroundTop, BackgroundBottom);
-	PlatformTexture = LoadTexture("Sprites/Platform.png");
-	
-	Player.Texture = LoadTexture("Sprites/Player.png");
+	Texture2D PlayerTexture = LoadTexture("Sprites/Player.png");
 	
 	Music BackgroundMusic = LoadMusicStream("Audio/BackgroundMusic.ogg");
 	PlayMusicStream(BackgroundMusic);
@@ -128,7 +111,7 @@ int main(void)
 		UpdateMusicStream(BackgroundMusic);
 		
 		float scale = MIN((float)GetScreenWidth()/ScreenWidth, (float)GetScreenHeight()/ScreenHeight);
-		
+
 		if(Title)
 		{
 			if(IsKeyDown(KEY_ENTER))
@@ -252,8 +235,8 @@ int main(void)
 		
 			ClearBackground(BACKGROUND);
 			
-			DrawTexture(BackgroundTop.Texture, 0, 0, WHITE);
-			DrawTexture(BackgroundBottom.Texture, 0, 390, WHITE);
+			DrawTexture(BackgroundTopTexture, 0, 0, WHITE);
+			DrawTexture(BackgroundBottomTexture, 0, 390, WHITE);
 			
 			if(Title)
 			{
@@ -264,7 +247,7 @@ int main(void)
 			}
 			else
 			{
-				DrawTexture(Player.Texture, Player.X, Player.Y, BACKGROUND);
+				DrawTexture(PlayerTexture, Player.X, Player.Y, WHITE);
 				
 				if(Platforms[0].X < 960)
 					DrawTexture(PlatformTexture, Platforms[0].X, Platforms[0].Y, WHITE);
@@ -291,10 +274,12 @@ int main(void)
 			
 		EndDrawing();
 	}
+
+	delete [] Platforms;
 	
-	UnloadTexture(Player.Texture);
-	UnloadTexture(BackgroundTop.Texture);
-	UnloadTexture(BackgroundBottom.Texture);
+	UnloadTexture(PlayerTexture);
+	UnloadTexture(BackgroundTopTexture);
+	UnloadTexture(BackgroundBottomTexture);
 	UnloadTexture(PlatformTexture);
 	
 	UnloadRenderTexture(Target);
